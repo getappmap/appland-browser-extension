@@ -1,0 +1,114 @@
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Nunito Sans Regular'), local('NunitoSans-Regular'), url(/fonts/NunitoSans-Regular.ttf) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+body {
+  width: 16rem;
+  height: 8rem;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  font-size: 16px;
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.header {
+  height: 2em;
+  padding: 1em;
+}
+
+.header img {
+  height: 100%;
+  width: 100%;
+}
+
+.footer {
+  background: url(/images/grid.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 3em;
+}
+
+.footer .overlay {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.75);
+}
+
+.footer img {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.container {
+  padding: 0 1em;
+}
+
+.form-control {
+  display: inline-block;
+  padding: .375rem .75rem;
+  line-height: 1.5;
+  background-clip: padding-box;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  vertical-align: top;
+}
+
+.appland-form-input {
+  background-color: #2a2c31 !important;
+  border-radius: 10px;
+  border: none;
+  color: #afafaf !important;
+  width: 14.5em;
+}
+
+.container input[type=checkbox] {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.record-button {
+  margin: auto;
+}
+
+.appmap-record-button {
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  background: red;
+  border-radius: 50%;
+  transition: border-radius 0.25s;
+  border: #fff solid 0.2em;
+  margin-left: 0.5em;
+  cursor: pointer;
+}
+
+.status {
+  text-align: center;
+  color: #afafaf;
+  margin-top: 0.5em;
+}
+
+input[type=checkbox]:checked + .appmap-record-button {
+  /* transform: translate(0.05em,0.05em);
+  width: 1.125em;
+  height: 1.125em; */
+  border-radius: 20%;
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

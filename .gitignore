@@ -1,0 +1,5 @@
+.crx
+.DS_Store
+
+# Don't publish your private keys :)
+.pem

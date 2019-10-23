@@ -1,0 +1,33 @@
+{
+
+  "manifest_version": 2,
+  "name": "AppLand",
+  "version": "0.1",
+
+  "description": "Control your AppLand AppMap recordings from the browser",
+  "homepage_url": "https://www.appland.com",
+  "icons": {
+    "48": "images/appland_a_32.png",
+    "96": "images/appland_a_96.png",
+    "128": "images/appland_a_128.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "http://*/",
+    "https://*/"
+  ],
+
+  "browser_action": {
+    "default_icon": "images/appland_a_128.png",
+    "default_title": "AppLand",
+    "default_popup": "popup/record.html"
+  },
+
+  "web_accessible_resources": [
+    "images/appland_logo_white.svg",
+    "images/grid.png"
+  ]
+
+}
