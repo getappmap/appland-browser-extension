@@ -2,6 +2,7 @@ const statusElement = document.querySelector('.status');
 const recordButton = document.querySelector('#appmap-record');
 const recordButtonGraphic = document.querySelector('.appmap-record-button');
 const urlInput = document.querySelector("#appland-url");
+const header = document.querySelector('.header');
 const browser = (window.chrome || window.browser);
 
 const colorReady = '#da0030';
@@ -144,4 +145,22 @@ function onLoad() {
   });
 }
 
+function isUrlValid(url) {
+  try {
+    new URL(url);
+    return true;
+  } catch (_) {
+    // fall through;
+  }
+  return false;
+}
+
 document.addEventListener('DOMContentLoaded', onLoad, false);
+header.addEventListener('click', (e) => {
+  const url = getAppLandUrl();
+  if (!isUrlValid(url)) {
+    return;
+  }
+
+  window.open(url, '_blank');
+});

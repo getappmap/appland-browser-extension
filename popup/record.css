@@ -21,6 +21,7 @@ body {
 .header {
   height: 2em;
   padding: 1em;
+  cursor: pointer;
 }
 
 .header img {
