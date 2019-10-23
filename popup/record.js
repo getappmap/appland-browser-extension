@@ -1,7 +1,11 @@
 const statusElement = document.querySelector('.status');
 const recordButton = document.querySelector('#appmap-record');
+const recordButtonGraphic = document.querySelector('.appmap-record-button');
 const urlInput = document.querySelector("#appland-url");
 const browser = (window.chrome || window.browser);
+
+const colorReady = '#da0030';
+const colorDisabled = '#350020';
 
 let ellipsisTimeoutId = -1;
 
@@ -45,7 +49,15 @@ function stopRecording() {
   });
 }
 
-function setStatus(status) {
+function setEnabled(enabled) {
+  recordButtonGraphic.style.background = enabled ? colorReady : colorDisabled;
+  recordButton.disabled = !enabled;
+
+  const cursor = enabled ? 'pointer' : 'default';
+  recordButton.style.cursor = cursor;
+  recordButtonGraphic.style.cursor = cursor;
+}
+function setStatus(status, enabled) {
   statusElement.innerHTML = status;
 }
 
@@ -107,6 +119,9 @@ urlInput.addEventListener('change', (e) => {
 });
 
 function onLoad() {
+  setStatus('preparing');
+  setEnabled(false);
+
   browser.storage.local.get('applandUrl', (data) => {
     if (data.applandUrl) {
       urlInput.value = data.applandUrl;
@@ -121,6 +136,7 @@ function onLoad() {
       if (req.status === 200) {
         const recordingState = JSON.parse(req.response);
         displayRecording(recordingState.enabled);
+        setEnabled(true);
       } else {
         setStatus('not available for this domain');
       }
