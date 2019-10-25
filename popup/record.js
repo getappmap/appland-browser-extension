@@ -64,19 +64,19 @@ function setStatus(status, enabled) {
 
 function saveScenario(data) {
   const url = getAppLandUrl();
-  const req = new XMLHttpRequest();
-  req.open('POST', `${url}/api/scenarios`);
-  req.setRequestHeader('Content-Type', 'application/json');
-  req.send(JSON.stringify({data: data}));
-  req.onload = () => {
-    if (req.status === 201) {
-      const response = JSON.parse(req.response);
-      const name = response.uuid.substring(0,8);
-      setStatus(`successfully uploaded <a href="${url}/scenarios/${response.uuid}" target="_blank">${name}</a>`);
-    } else {
-      setStatus('failed to upload scenario');
-    }
-  };
+  const form = document.createElement("form");
+  form.setAttribute("method", "post");
+  form.setAttribute("action", `${url}/scenarios`);
+  form.setAttribute("target", "_blank");
+  var input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'data';
+  input.value = JSON.stringify(data);
+  form.appendChild(input);
+
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
 }
 
 function animateEllipsis(isAnimating, numEllipsis) {

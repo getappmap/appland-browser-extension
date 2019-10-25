@@ -14,9 +14,7 @@
 
   "permissions": [
     "activeTab",
-    "storage",
-    "http://*/",
-    "https://*/"
+    "storage"
   ],
 
   "browser_action": {
