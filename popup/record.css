@@ -70,7 +70,7 @@ body {
   width: 14.5em;
 }
 
-.container input[type=checkbox] {
+.hidden {
   display: none;
   width: 0;
   height: 0;
@@ -94,7 +94,7 @@ body {
 
 .status {
   text-align: center;
-  color: #afafaf;
+  color: #cecece;
   margin-top: 0.5em;
 }
 
@@ -103,6 +103,12 @@ input[type=checkbox]:checked + .appmap-record-button {
   width: 1.125em;
   height: 1.125em; */
   border-radius: 20%;
+}
+
+.form-group {
+  color: #9e9e9e;
+  font-size: smaller;
+  margin-bottom: 1em;
 }
 
 .no-select {

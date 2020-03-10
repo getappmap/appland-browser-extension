@@ -2,22 +2,57 @@ const statusElement = document.querySelector('.status');
 const recordButton = document.querySelector('#appmap-record');
 const recordButtonGraphic = document.querySelector('.appmap-record-button');
 const urlInput = document.querySelector("#appland-url");
+const backendUrlInput = document.querySelector("#backend-url");
 const header = document.querySelector('.header');
 const browser = (window.chrome || window.browser);
+const backendUrlObjectKey = 'backend_urls';
 
 const colorReady = '#da0030';
 const colorDisabled = '#350020';
 
 let ellipsisTimeoutId = -1;
 
+
 function saveApplandUrl(url) {
   browser.storage.local.set({applandUrl: url});
 }
 
-function getTabUrl(callback) {
+function getUrlHostname(urlString) {
+  return new URL(urlString).hostname;
+}
+
+function getBackendUrl(callbackFn) {
+  getTabUrl((urlString) => {
+    browser.storage.local.get(backendUrlObjectKey, (data) => {
+      const obj = data[backendUrlObjectKey] || {};
+      const hostname = getUrlHostname(urlString);
+      const currentValue = obj[hostname];
+      if (currentValue) {
+        callbackFn(currentValue);
+        return;
+      }
+
+      const origin = new URL(urlString).origin;
+      callbackFn(origin);
+    });
+  });
+}
+
+function saveBackendUrl(backendUrlString) {
+  getTabUrl((tabUrlString) => {
+    browser.storage.local.get(backendUrlObjectKey, (data) => {
+      const obj = data || {};
+      const tabUrl = new URL(tabUrlString);
+      obj[tabUrl.hostname] = backendUrlString;
+      browser.storage.local.set({[backendUrlObjectKey]: obj});
+    });
+  });
+}
+
+function getTabUrl(callbackFn) {
   browser.tabs.query({active: true, currentWindow: true}, (tabs) => {
     const url = new URL(tabs[0].url);
-    callback(url);
+    callbackFn(url);
   });
 }
 
@@ -26,18 +61,18 @@ function getAppLandUrl() {
 }
 
 function startRecording() {
-  getTabUrl((url) => {
+  getBackendUrl((url) => {
     const req = new XMLHttpRequest();
-    req.open('POST', `${url.origin}/_appmap/record`);
+    req.open('POST', `${url}/_appmap/record`);
     req.send();
     displayRecording(true);
   });
 }
 
 function stopRecording() {
-  getTabUrl((url) => {
+  getBackendUrl((url) => {
     const req = new XMLHttpRequest();
-    req.open('DELETE', `${url.origin}/_appmap/record`);
+    req.open('DELETE', `${url}/_appmap/record`);
     req.send();
     req.onload = () => {
       if (req.status === 200) {
@@ -119,6 +154,10 @@ urlInput.addEventListener('change', (e) => {
   saveApplandUrl(e.target.value);
 });
 
+backendUrlInput.addEventListener('change', (e) => {
+  saveBackendUrl(e.target.value);
+});
+
 function onLoad() {
   setStatus('preparing');
   setEnabled(false);
@@ -129,9 +168,10 @@ function onLoad() {
     }
   });
 
-  getTabUrl((url) => {
+  getBackendUrl((url) => {
+    backendUrlInput.value = url;
     const req = new XMLHttpRequest();
-    req.open('GET', `${url.origin}/_appmap/record`);
+    req.open('GET', `${url}/_appmap/record`);
     req.send();
     req.onload = () => {
       if (req.status === 200) {
