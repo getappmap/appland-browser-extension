@@ -51,6 +51,7 @@ body {
 
 .container {
   padding: 0 1em;
+  text-align: center;
 }
 
 .form-control {
