@@ -3,50 +3,63 @@ const recordButton = document.querySelector('#appmap-record');
 const recordButtonGraphic = document.querySelector('.appmap-record-button');
 const urlInput = document.querySelector("#appland-url");
 const header = document.querySelector('.header');
-const browser = (window.chrome || window.browser);
 
 const colorReady = '#da0030';
 const colorDisabled = '#350020';
 
 let ellipsisTimeoutId = -1;
 
-function saveApplandUrl(url) {
-  browser.storage.local.set({applandUrl: url});
+document.addEventListener('DOMContentLoaded', onLoad);
+header.addEventListener('click', onHeaderClick);
+recordButton.addEventListener('change', (e) => {
+  e.target.checked ? startRecording() : stopRecording()
+});
+
+urlInput.addEventListener('change', (e) => {
+  saveApplandUrl(e.target.value);
+});
+
+async function onHeaderClick() {
+  const url = await getApplandUrl();
+  if (isUrlValid(url)) {
+    window.open(url, '_blank');
+  }
+  else {
+    alert(`${url} is not a valid URL`);
+  }
 }
 
 function getTabUrl(callback) {
-  browser.tabs.query({active: true, currentWindow: true}, (tabs) => {
+  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
     const url = new URL(tabs[0].url);
-    callback(url);
+    callback(url, tabs[0].windowId);
   });
-}
-
-function getAppLandUrl() {
-  return urlInput.value;
 }
 
 function startRecording() {
   getTabUrl((url) => {
     const req = new XMLHttpRequest();
     req.open('POST', `${url.origin}/_appmap/record`);
+    req.onload = () => {
+      if (req.status === 200) {
+        displayRecording(true);
+      }
+      else {
+        showXHRError(req, `Failed to start recording`);
+      }
+    };
     req.send();
-    displayRecording(true);
   });
 }
 
 function stopRecording() {
-  getTabUrl((url) => {
-    const req = new XMLHttpRequest();
-    req.open('DELETE', `${url.origin}/_appmap/record`);
-    req.send();
-    req.onload = () => {
-      if (req.status === 200) {
-        if ( req.response ) {
-          saveScenario(JSON.parse(req.response));
-        }
-      }
-    };
-    displayRecording(false);
+  getTabUrl((url, windowId) => {
+    chrome.tabs.create({
+      url: `/popup/save.html?url=${url.origin}`,
+      windowId: windowId
+    }, () => {
+      displayRecording(false)
+    });
   });
 }
 
@@ -60,23 +73,6 @@ function setEnabled(enabled) {
 }
 function setStatus(status, enabled) {
   statusElement.innerHTML = status;
-}
-
-function saveScenario(data) {
-  const url = getAppLandUrl();
-  const form = document.createElement("form");
-  form.setAttribute("method", "post");
-  form.setAttribute("action", `${url}/scenarios`);
-  form.setAttribute("target", "_blank");
-  var input = document.createElement('input');
-  input.type = 'hidden';
-  input.name = 'data';
-  input.value = JSON.stringify(data);
-  form.appendChild(input);
-
-  document.body.appendChild(form);
-  form.submit();
-  document.body.removeChild(form);
 }
 
 function animateEllipsis(isAnimating, numEllipsis) {
@@ -111,28 +107,15 @@ function displayRecording(isRecording) {
   animateEllipsis(isRecording);
 }
 
-recordButton.addEventListener('change', (e) => {
-  e.target.checked ? startRecording() : stopRecording()
-});
-
-urlInput.addEventListener('change', (e) => {
-  saveApplandUrl(e.target.value);
-});
-
-function onLoad() {
+async function onLoad() {
   setStatus('preparing');
   setEnabled(false);
 
-  browser.storage.local.get('applandUrl', (data) => {
-    if (data.applandUrl) {
-      urlInput.value = data.applandUrl;
-    }
-  });
+  urlInput.value = await getApplandUrl();
 
   getTabUrl((url) => {
     const req = new XMLHttpRequest();
     req.open('GET', `${url.origin}/_appmap/record`);
-    req.send();
     req.onload = () => {
       if (req.status === 200) {
         const recordingState = JSON.parse(req.response);
@@ -142,6 +125,7 @@ function onLoad() {
         setStatus('not available for this domain');
       }
     };
+    req.send();
   });
 }
 
@@ -155,12 +139,3 @@ function isUrlValid(url) {
   return false;
 }
 
-document.addEventListener('DOMContentLoaded', onLoad, false);
-header.addEventListener('click', (e) => {
-  const url = getAppLandUrl();
-  if (!isUrlValid(url)) {
-    return;
-  }
-
-  window.open(url, '_blank');
-});
