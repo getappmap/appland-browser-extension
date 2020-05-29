@@ -51,6 +51,7 @@ body {
 
 .container {
   padding: 0 1em;
+  text-align: center;
 }
 
 .form-control {
@@ -88,6 +89,7 @@ body {
   border-radius: 50%;
   transition: border-radius 0.25s;
   border: #fff solid 0.2em;
+  margin-top: .5em;
   margin-left: 0.5em;
   cursor: pointer;
 }
