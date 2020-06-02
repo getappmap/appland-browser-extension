@@ -4,7 +4,7 @@ const recordButtonGraphic = document.querySelector('.appmap-record-button');
 const urlInput = document.querySelector("#appland-url");
 const header = document.querySelector('.header');
 
-const colorReady = '#da0030';
+const colorReady = '#FF07AA';
 const colorDisabled = '#350020';
 
 let ellipsisTimeoutId = -1;
@@ -103,12 +103,12 @@ function animateEllipsis(isAnimating, numEllipsis) {
 
 function displayRecording(isRecording) {
   recordButton.checked = isRecording;
-  statusElement.innerText = isRecording ? 'recording' : 'ready';
+  statusElement.innerText = isRecording ? 'Recording' : 'Ready';
   animateEllipsis(isRecording);
 }
 
 async function onLoad() {
-  setStatus('preparing');
+  setStatus('Preparing');
   setEnabled(false);
 
   urlInput.value = await getApplandUrl();
@@ -122,7 +122,7 @@ async function onLoad() {
         displayRecording(recordingState.enabled);
         setEnabled(true);
       } else {
-        setStatus('not available for this domain');
+        setStatus('Not available for this domain');
       }
     };
     req.send();
