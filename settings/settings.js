@@ -38,6 +38,7 @@ settingsForm.addEventListener('input', () => {
 
 settingsForm.addEventListener('submit', onSubmit);
 async function onSubmit(e) {
+  e.preventDefault();
   if (saveButton.disabled) {
     return;
   }
@@ -52,8 +53,6 @@ async function onSubmit(e) {
 }
 
 async function onLoad(e) {
-  e.preventDefault();
-
   const useCurrent = await options.getUseCurrent()
   setAlternateRadio(useCurrent? 'current' : 'alternate');
   
