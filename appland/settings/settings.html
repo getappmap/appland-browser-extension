@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="settings.css" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <form name="settings_form" id="settings">
+      <p>
+        <label for="appland_url">AppLand Server URL (required)</label>
+        <input type="url" id="appland_url" required >
+      </p>
+
+      <p>
+        <fieldset>
+          <legend>Target Server</legend>
+          <input required type="radio" name="alternate_radio" id="use_current" value="current"><label for="use_current">Use current tab</label>
+          <input required type="radio" name="alternate_radio" id="use_alternate" value="alternate"><label for="use_alternate">Alternate URL</label>
+          <input type="url" id="alternate_url">
+        </fieldset>
+      </p>
+      
+      <button id="save" disabled>Save</button>
+    </form>
+    
+    <script src="/utils.js"></script>
+    <script type="module" src="/settings/settings.js"></script>
+  </body>
+</html>
