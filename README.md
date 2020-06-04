@@ -2,11 +2,17 @@
 
 ## Development
 
-### Chrome
+### The Easy Way
+Use
+[web-ext](https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext/).
+
+### The Hard Way
+
+#### Chrome
 Open Chrome to `chrome://extensions/` and enable developer mode. Click "Load Unpacked" and select
 this repository.
 
-### Firefox
+#### Firefox
 To enable extension development, start by following the instructions here:
 https://developer.mozilla.org/en-US/docs/Tools/Browser_Toolbox#Enabling_the_Browser_Toolbox .
 
