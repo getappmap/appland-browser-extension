@@ -7,23 +7,37 @@
   </head>
 
   <body>
-    <form name="settings_form" id="settings">
-      <p>
-        <label for="appland_url">AppLand Server URL (required)</label>
-        <input type="url" id="appland_url" required >
-      </p>
+    <header>
+      <img src="/images/appland-logo-sharp.svg"/>
+      <h2>Browser extension settings</h2>
+    </header>
 
-      <p>
+    <div class="container">
+
+      <form name="settings_form" id="settings">
+        <div class="form">
+          <label for="appland_url">AppLand Server URL <span>(required)</span></label>
+          <input type="url" id="appland_url" required >
+        </div>
+
+        <h2>Target server</h2>
         <fieldset>
-          <legend>Target Server</legend>
-          <input required type="radio" name="alternate_radio" id="use_current" value="current"><label for="use_current">Use current tab</label>
-          <input required type="radio" name="alternate_radio" id="use_alternate" value="alternate"><label for="use_alternate">Alternate URL</label>
-          <input type="url" id="alternate_url">
+          <!-- <legend>Target Server</legend> -->
+          <div class="option">
+            <input required type="radio" name="alternate_radio" id="use_current" value="current"><label for="use_current">Use current tab</label>
+          </div>
+          <div class="option">  
+            <input required type="radio" name="alternate_radio" id="use_alternate" value="alternate"><label for="use_alternate">Alternate URL:</label>
+            <input type="url" id="alternate_url">
+          </div>
         </fieldset>
-      </p>
-      
-      <button id="save" disabled>Save</button>
-    </form>
+
+        
+        <button class="btn btn-primary controls" id="save" disabled>Save</button>
+      </form>
+    
+    </div>
+
     
     <script src="/utils.js"></script>
     <script type="module" src="settings.js"></script>
