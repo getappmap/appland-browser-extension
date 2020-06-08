@@ -1,0 +1,143 @@
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Nunito Sans Regular'), local('NunitoSans-Regular'), url(/fonts/NunitoSans-Regular.ttf) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+p > label {
+  display: block;
+}
+
+body {
+  background-color: #171e2f;
+  padding: 3rem;
+  color: #EAEAEA;
+  font-size: 16px;
+  line-height: 1.8rem;
+  font-family: 'Nunito Sans';
+}
+
+a {
+  color: #4362b1;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+#errors_link {
+  margin-left: .5rem;
+}
+
+header {
+  margin-bottom: 2rem;
+}
+
+header img {
+  width: 300px;
+}
+header h2 {
+  font-weight: 500;
+}
+
+.form {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.form label {
+  width: 100%;
+  display: block;
+}
+
+.form input {
+  flex: 1;
+  padding: .5rem; 
+  color: #EAEAEA;
+  border-radius: 4px;
+  border: 1px solid #343742;
+  margin-top: .5rem;
+  background-color: transparent;
+  font-size: 1rem;
+}
+
+.form label {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #808b98;
+}
+
+.card {
+  background-color: #010306;
+  border-radius: 4px;
+}
+
+fieldset {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+h2 {
+  margin: 0 0 .5rem 0;
+  font-weight: 500;
+  color: #808b98;
+}
+.option {
+  padding: .5rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.option label, .option input {
+  margin-left: .25rem;
+}
+
+label span {
+  font-size: 1rem;
+}
+
+.option input{
+  color: #EAEAEA;
+  font-size: 1rem;
+}
+
+.btn {
+  border-radius: 4px;
+  border: 0;
+  box-shadow: none;
+  color: #EAEAEA;
+  padding: .5rem .8rem;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: #FF07AA;
+}
+
+.btn-primary:hover {
+  background-color: #9a0e6a;
+}
+
+#alternate_url {
+  padding: .5rem;
+  background: transparent;
+  border: 1px solid #343742;
+  border-radius: 4px;
+  width: 50%;
+  flex: 1;
+}
+
+#alternate_url:focus, #appland_url:focus {
+  outline: none;
+}
+
+section {
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
