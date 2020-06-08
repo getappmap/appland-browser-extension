@@ -57,12 +57,12 @@ async function showErrors() {
     ${entry.ts} ${entry.status} ${entry.msg}
   </summary>    
     <ul>
-      <li>${entry.ts}</li>
-      <li>${entry.status}</li>
-      <li>${entry.msg}</li>
+      <li><span class="error-label">ts:</span> ${entry.ts}</li>
+      <li><span class="error-label">status:</span> ${entry.status}</li>
+      <li><span class="error-label">msg:</span> ${entry.msg}</li>
 `;
       if (entry.resp) {
-        error += `<li>${entry.resp}</li>\n`;
+        error += `<li><span class="error-label">resp:</span> ${entry.resp}</li>\n`;
       }
       error += `
     </ul>
