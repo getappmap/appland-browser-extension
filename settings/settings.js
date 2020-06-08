@@ -3,9 +3,11 @@ import Options from "/options.js";
 const settingsForm = document.querySelector('#settings');
 const applandUrlInput = document.querySelector('#appland_url');
 const useCurrentButton = document.querySelector('#use_current');
-const useAlternateButton = document.querySelector('#use_alternate')
+const useAlternateButton = document.querySelector('#use_alternate');
 const alternateUrlInput = document.querySelector('#alternate_url');
 const saveButton = document.querySelector('#save');
+const saveErrorsInput = document.querySelector('#save_errors');
+const errorsLink = document.querySelector('#errors_link');
 
 const options = new Options();
 
@@ -53,7 +55,7 @@ async function onSubmit(e) {
 }
 
 async function onLoad(e) {
-  const useCurrent = await options.getUseCurrent()
+  const useCurrent = options.getUseCurrent();
   setAlternateRadio(useCurrent? 'current' : 'alternate');
   
   applandUrlInput.value = await options.getAppLandUrl();
@@ -61,4 +63,10 @@ async function onLoad(e) {
   
   const alternateUrl = await options.getAlternateUrl();
   alternateUrlInput.value = await options.getAlternateUrl();
+
+  const saveErrors = await options.getSaveErrors();
+  saveErrorsInput.checked = saveErrors;
+  if (saveErrors) {
+    errorsLink.href = "/errors/errors.html";
+  }
 }

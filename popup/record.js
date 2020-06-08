@@ -1,3 +1,4 @@
+import * as utils from '/utils.js';
 import Options from "/options.js";
 
 const statusElement = document.querySelector('.status');
@@ -32,7 +33,7 @@ async function onHeaderClick() {
 async function getTarget() {
   return options.getUseCurrent().then((useCurrent) => {
     if (useCurrent) {
-      return getTabUrl();
+      return utils.getTabUrl();
     }
 
     return options.getAlternateUrl().then((url) => {
@@ -50,7 +51,7 @@ function startRecording() {
         displayRecording(true);
       }
       else {
-        showXHRError(req, 'Failed to start recording');
+        utils.showXHRError(req, 'Failed to start recording');
       }
     };
     req.send();
@@ -124,9 +125,12 @@ async function onLoad() {
         displayRecording(recordingState.enabled);
         setEnabled(true);
       } else {
-        showXHRError(req, 'Failed checking recording status');
+        utils.showXHRError(req, 'Failed checking recording status');
         setStatus('Not available for this domain');
       }
+    };
+    req.onerror = () => {
+      utils.showXHRError(req, 'Network error checking recording status');
     };
     req.send();
   });
