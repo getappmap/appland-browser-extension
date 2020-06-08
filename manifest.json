@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "AppLand",
-  "version": "0.1",
+  "version": "0.2",
 
   "description": "Control your AppLand AppMap recordings from the browser",
   "homepage_url": "https://app.land",
@@ -28,6 +28,10 @@
   "web_accessible_resources": [
     "images/appland_logo_white.svg",
     "images/grid.png"
-  ]
+  ],
 
+  "options_ui": {
+    "page": "settings/settings.html",
+    "open_in_tab": true
+  }
 }

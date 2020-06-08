@@ -1,4 +1,8 @@
+import Options from "/options.js"
+
 document.addEventListener('DOMContentLoaded', onLoad, false);
+
+const options = new Options();
 
 function onLoad() {
   const url = (new URL(document.location).searchParams).get('url');
@@ -19,7 +23,7 @@ function onLoad() {
 
 async function saveScenario(data) {
   const form = document.querySelector('form');
-  const applandUrl = await getApplandUrl();
+  const applandUrl = await options.getAppLandUrl();
   form.setAttribute('action', `${applandUrl}/scenarios`);
   form.querySelector('input').value = JSON.stringify(data);
   form.submit();

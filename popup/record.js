@@ -1,7 +1,8 @@
+import Options from "/options.js";
+
 const statusElement = document.querySelector('.status');
 const recordButton = document.querySelector('#appmap-record');
 const recordButtonGraphic = document.querySelector('.appmap-record-button');
-const urlInput = document.querySelector("#appland-url");
 const header = document.querySelector('.header');
 
 const colorReady = '#FF07AA';
@@ -9,54 +10,58 @@ const colorDisabled = '#350020';
 
 let ellipsisTimeoutId = -1;
 
+const options = new Options();
+
 document.addEventListener('DOMContentLoaded', onLoad);
 header.addEventListener('click', onHeaderClick);
 recordButton.addEventListener('change', (e) => {
   e.target.checked ? startRecording() : stopRecording()
 });
 
-urlInput.addEventListener('change', (e) => {
-  saveApplandUrl(e.target.value);
-});
-
 async function onHeaderClick() {
-  const url = await getApplandUrl();
-  if (isUrlValid(url)) {
-    window.open(url, '_blank');
-  }
-  else {
-    alert(`${url} is not a valid URL`);
-  }
+  options.getAppLandUrl().then((url) => {
+    if (isUrlValid(url)) {
+      window.open(url, '_blank');
+    }
+    else {
+      alert(`${url} is not a valid URL`);
+    }
+  });
 }
 
-function getTabUrl(callback) {
-  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-    const url = new URL(tabs[0].url);
-    callback(url, tabs[0].windowId);
+async function getTarget() {
+  return options.getUseCurrent().then((useCurrent) => {
+    if (useCurrent) {
+      return getTabUrl();
+    }
+
+    return options.getAlternateUrl().then((url) => {
+      return {url: new URL(url)};
+    });
   });
 }
 
 function startRecording() {
-  getTabUrl((url) => {
+  getTarget().then((target) => {
     const req = new XMLHttpRequest();
-    req.open('POST', `${url.origin}/_appmap/record`);
+    req.open('POST', `${target.url.origin}/_appmap/record`);
     req.onload = () => {
       if (req.status === 200) {
         displayRecording(true);
       }
       else {
-        showXHRError(req, `Failed to start recording`);
+        showXHRError(req, 'Failed to start recording');
       }
     };
     req.send();
   });
 }
 
-function stopRecording() {
-  getTabUrl((url, windowId) => {
+async function stopRecording() {
+  getTarget().then((target) => {
     chrome.tabs.create({
-      url: `/popup/save.html?url=${url.origin}`,
-      windowId: windowId
+      url: `/popup/save.html?url=${target.url.origin}`,
+      windowId: target.windowId
     }, () => {
       displayRecording(false)
     });
@@ -71,7 +76,7 @@ function setEnabled(enabled) {
   recordButton.style.cursor = cursor;
   recordButtonGraphic.style.cursor = cursor;
 }
-function setStatus(status, enabled) {
+function setStatus(status) {
   statusElement.innerHTML = status;
 }
 
@@ -103,25 +108,23 @@ function animateEllipsis(isAnimating, numEllipsis) {
 
 function displayRecording(isRecording) {
   recordButton.checked = isRecording;
-  statusElement.innerText = isRecording ? 'Recording' : 'Ready';
+  setStatus(isRecording ? 'Recording' : 'Ready');
   animateEllipsis(isRecording);
 }
 
 async function onLoad() {
-  setStatus('Preparing');
   setEnabled(false);
 
-  urlInput.value = await getApplandUrl();
-
-  getTabUrl((url) => {
+  getTarget().then((target) => {
     const req = new XMLHttpRequest();
-    req.open('GET', `${url.origin}/_appmap/record`);
+    req.open('GET', `${target.url.origin}/_appmap/record`);
     req.onload = () => {
       if (req.status === 200) {
         const recordingState = JSON.parse(req.response);
         displayRecording(recordingState.enabled);
         setEnabled(true);
       } else {
+        showXHRError(req, 'Failed checking recording status');
         setStatus('Not available for this domain');
       }
     };
