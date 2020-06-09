@@ -14,6 +14,7 @@ export async function showXHRError(req, msg) {
         }
         let entry = {
           ts: new Date().toISOString(),
+          url: req.responseURL,
           msg: msg,
           status: req.status
         };

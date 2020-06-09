@@ -54,10 +54,11 @@ async function showErrors() {
       let error = `
 <details ${showAllCb.checked? "open" : ""}>
   <summary>
-    ${entry.ts} ${entry.status} ${entry.msg}
+    ${entry.ts} ${entry.msg}
   </summary>    
     <ul>
       <li><span class="error-label">ts:</span> ${entry.ts}</li>
+      <li><span class="error-label">url:</span> ${entry.url}</li>
       <li><span class="error-label">status:</span> ${entry.status}</li>
       <li><span class="error-label">msg:</span> ${entry.msg}</li>
 `;
