@@ -112,29 +112,17 @@ label span {
   border: 0;
   box-shadow: none;
   color: #EAEAEA;
+  background-color: #6c757d;
   padding: .5rem .8rem;
   font-size: 1rem;
 }
 
-.btn-primary {
+.btn-primary:enabled {
   background-color: #FF07AA;
 }
 
-.btn-primary:hover {
+.btn-primary:enabled:hover {
   background-color: #9a0e6a;
-}
-
-#alternate_url {
-  padding: .5rem;
-  background: transparent;
-  border: 1px solid #343742;
-  border-radius: 4px;
-  width: 50%;
-  flex: 1;
-}
-
-#alternate_url:focus, #appland_url:focus {
-  outline: none;
 }
 
 section {

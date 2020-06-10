@@ -22,31 +22,26 @@
         </section>
         
         <section class="card">
-          <h2>Target server</h2>
-          <fieldset>
-            <div class="option">
-              <input required type="radio" name="alternate_radio" id="use_current" value="current"><label for="use_current">Use current tab</label>
-            </div>
-            <div class="option">  
-              <input required type="radio" name="alternate_radio" id="use_alternate" value="alternate"><label for="use_alternate">Alternate URL:</label>
-              <input type="url" id="alternate_url">
-            </div>
-          </fieldset>
+          <h2>Target Server</h2>
+          <div class="option">
+            <input type="checkbox" id="show_target"><label for="show_target">Show Target URL</label>
+          </div>
         </section>
-
+        
         <section class="card">
           <h2>Errors</h2>
           <div class="option">
-          <input type="checkbox" id="save_errors"><label for="save_errors">Save Errors</label>
-          <a id="errors_link">Error Log</a>
-        </div>
+            <input type="checkbox" id="save_errors" checked><label for="save_errors">Save Errors</label>
+            <a id="errors_link">Error Log</a>
+          </div>
         </section>
       
         <button class="btn btn-primary controls" id="save" disabled>Save</button>
-
       </form>
     </div>
     
     <script src="settings.js" type="module"></script>
+
+    <a href="/options/test.html">Options Test</a>
   </body>
 </html>

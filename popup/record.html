@@ -15,8 +15,15 @@
 
       <input type="checkbox" id="appmap-record" disabled>
       <label class="appmap-record-button" for="appmap-record"></label>
-      <div class="status">Preparing</div>
 
+      <form class="hidden" id="target_form">
+        <label for="target_url">Target URL</label><input type="url" id="target_url">
+        <input type="hidden" name="t" id="t" value="false">
+        <button id="save">Save</button>
+        <button id="cancel">Cancel</button>
+      </form>
+      <div class="status">Preparing</div>
+      
     </div>
 
     <script src="record.js" type="module"></script>

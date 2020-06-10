@@ -1,4 +1,5 @@
-import Options from "/options.js"
+import Options from "/options/options.js";
+import * as utils from '/utils.js';
 
 document.addEventListener('DOMContentLoaded', onLoad, false);
 
@@ -15,7 +16,7 @@ function onLoad() {
       }
     }
     else {
-      showXHRError(req, 'Failed saving recording');
+      utils.showXHRError(req, 'Failed saving recording');
     }
   };
   req.send();
