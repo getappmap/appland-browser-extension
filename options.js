@@ -1,35 +1,11 @@
-export default function Options() {
-  function readFromStorage(key) {
-    return new Promise((resolve, reject) => {
-      chrome.storage.local.get(key, (result) => {
-        if (!chrome.runtime.lastError) {
-          resolve(result[key]);
-        }
-        else {
-          reject(Error(chrome.runtime.lastError.message));
-        }
-      });
-    });
-  };
+import * as utils from '/utils.js';
 
-  function writeToStorage(key, value) {
-    let entry = {[key.toString()]: value};
-    return new Promise((resolve, reject) => {
-      chrome.storage.local.set(entry, () => {
-        if (!chrome.runtime.lastError) {
-          resolve(value);
-        }
-        else {
-          reject(Error(chrome.runtime.lastError.message));
-        }
-      });
-    })
-  };
+export default function Options() {
 
   this.defaultAppLandUrl = () => chrome.runtime.getManifest().homepage_url;
   const applandUrlKey = 'applandUrl';
   this.getAppLandUrl = async function() {
-    return readFromStorage(applandUrlKey).then((value) => {
+    return utils.readFromStorage(applandUrlKey).then((value) => {
       if (value) {
         return value;
       }
@@ -39,13 +15,13 @@ export default function Options() {
     });
   };
   this.setAppLandUrl = async function(url) {
-    return writeToStorage(applandUrlKey, url);
+    return utils.writeToStorage(applandUrlKey, url);
   };
   
 
   const useCurrentKey = 'useCurrent';
   this.getUseCurrent = async function() {
-    return readFromStorage(useCurrentKey).then((value) => {
+    return utils.readFromStorage(useCurrentKey).then((value) => {
       if (typeof value !== 'undefined') {
         return value;
       }
@@ -54,12 +30,12 @@ export default function Options() {
     });
   };
   this.setUseCurrent = async function(useCurrent) {
-    return writeToStorage(useCurrentKey, useCurrent);
-  }
+    return utils.writeToStorage(useCurrentKey, useCurrent);
+  };
   
   const alternateUrlKey = 'alternateUrl';
   this.getAlternateUrl = async function() {
-    return readFromStorage(alternateUrlKey).then((url) => {
+    return utils.readFromStorage(alternateUrlKey).then((url) => {
       if (typeof url !== 'undefined') {
         return url;
       }
@@ -68,6 +44,10 @@ export default function Options() {
     });
   };
   this.setAlternateUrl = async function(url) {
-    return writeToStorage(alternateUrlKey, url);
+    return utils.writeToStorage(alternateUrlKey, url);
+  };
+
+  this.getSaveErrors = async function() {
+    return Promise.resolve(true);
   };
 };

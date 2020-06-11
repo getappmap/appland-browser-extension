@@ -7,25 +7,46 @@
   </head>
 
   <body>
-    <form name="settings_form" id="settings">
-      <p>
-        <label for="appland_url">AppLand Server URL (required)</label>
-        <input type="url" id="appland_url" required >
-      </p>
+    <div class="container">
+      <header>
+        <img src="/images/appland-logo-sharp.svg"/>
+        <h2>Browser extension settings</h2>
+      </header>
 
-      <p>
-        <fieldset>
-          <legend>Target Server</legend>
-          <input required type="radio" name="alternate_radio" id="use_current" value="current"><label for="use_current">Use current tab</label>
-          <input required type="radio" name="alternate_radio" id="use_alternate" value="alternate"><label for="use_alternate">Alternate URL</label>
-          <input type="url" id="alternate_url">
-        </fieldset>
-      </p>
+      <form name="settings_form" id="settings">
+        <section class="card">
+          <div class="form">
+            <label for="appland_url">AppLand Server URL <span>(required)</span></label>
+            <input type="url" id="appland_url" required >
+          </div>
+        </section>
+        
+        <section class="card">
+          <h2>Target server</h2>
+          <fieldset>
+            <div class="option">
+              <input required type="radio" name="alternate_radio" id="use_current" value="current"><label for="use_current">Use current tab</label>
+            </div>
+            <div class="option">  
+              <input required type="radio" name="alternate_radio" id="use_alternate" value="alternate"><label for="use_alternate">Alternate URL:</label>
+              <input type="url" id="alternate_url">
+            </div>
+          </fieldset>
+        </section>
+
+        <section class="card">
+          <h2>Errors</h2>
+          <div class="option">
+          <input type="checkbox" id="save_errors"><label for="save_errors">Save Errors</label>
+          <a id="errors_link">Error Log</a>
+        </div>
+        </section>
       
-      <button id="save" disabled>Save</button>
-    </form>
+        <button class="btn btn-primary controls" id="save" disabled>Save</button>
+
+      </form>
+    </div>
     
-    <script src="/utils.js"></script>
-    <script type="module" src="settings.js"></script>
+    <script src="settings.js" type="module"></script>
   </body>
 </html>

@@ -13,15 +13,19 @@ p > label {
 
 body {
   background-color: #171e2f;
+  font-family: 'Nunito Sans';
   padding: 3rem;
   color: #EAEAEA;
   font-size: 16px;
   line-height: 1.8rem;
-  font-family: 'Nunito Sans';
 }
 
-a {
-  color: #4362b1;
+header {
+  margin-bottom: 2rem; 
+}
+
+header img {
+  width: 300px;
 }
 
 .container {
@@ -29,25 +33,33 @@ a {
   margin: 0 auto;
 }
 
-#errors_link {
-  margin-left: .5rem;
+.card {
+  border-radius: 4px;
+  background-color: #010306;
+  padding: 1.25rem;
 }
 
-header {
+.radio {
+  display: flex;
+  flex-direction: row;
+}
+
+.radio .form {
+  margin-right: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.controls-wrap {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 2rem;
 }
 
-header img {
-  width: 300px;
-}
-header h2 {
-  font-weight: 500;
-}
-
-.form {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+.error-label {
+  color: #4362b1;
+  font-weight: 800;
 }
 
 .form label {
@@ -57,34 +69,17 @@ header h2 {
 
 .form input {
   flex: 1;
-  padding: .5rem; 
+  padding-right: .5rem; 
   color: #EAEAEA;
   border-radius: 4px;
   border: 1px solid #343742;
-  margin-top: .5rem;
+  margin: 0 .25rem 0 0;
   background-color: transparent;
   font-size: 1rem;
 }
 
-.form label {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #808b98;
-}
-
-.card {
-  background-color: #010306;
-  border-radius: 4px;
-}
-
-fieldset {
-  margin: 0;
-  border: 0;
-  padding: 0;
-}
-
-h2 {
-  margin: 0 0 .5rem 0;
+h1 {
+  margin: .25rem 0 .5rem 0;
   font-weight: 500;
   color: #808b98;
 }
@@ -98,13 +93,13 @@ h2 {
   margin-left: .25rem;
 }
 
-label span {
-  font-size: 1rem;
-}
-
 .option input{
   color: #EAEAEA;
   font-size: 1rem;
+}
+
+button {
+  margin-right: 1rem;
 }
 
 .btn {
@@ -124,20 +119,28 @@ label span {
   background-color: #9a0e6a;
 }
 
-#alternate_url {
-  padding: .5rem;
-  background: transparent;
-  border: 1px solid #343742;
+details {
+  padding: 0;
   border-radius: 4px;
-  width: 50%;
-  flex: 1;
+  background-color: #010306;
+  margin-bottom: 1rem;
 }
 
-#alternate_url:focus, #appland_url:focus {
-  outline: none;
+details ul {
+  list-style-type: none;
+  padding: 0;
 }
 
-section {
-  padding: 2rem;
-  margin-bottom: 2rem;
+details ul li {
+  padding: .5rem 1.25rem;
+  border-bottom: 1px solid #343742;
+  color: #808b98;
+}
+
+details ul li:last-of-type {
+  border: 0;
+}
+
+summary {
+  padding: 1rem 1.25rem;
 }

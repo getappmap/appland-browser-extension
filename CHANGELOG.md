@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- An Error Log, showing the last 100 errors from `XMLHttpRequest`s. Available from the
+  extension settings page.
+
 - An options page to specify the server to target for recording, as well the
   AppLand server for uploading.
   
