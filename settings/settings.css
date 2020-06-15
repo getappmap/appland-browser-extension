@@ -75,6 +75,7 @@ header h2 {
 .card {
   background-color: #010306;
   border-radius: 4px;
+  margin-bottom: 2rem;
 }
 
 fieldset {
@@ -83,13 +84,19 @@ fieldset {
   padding: 0;
 }
 
+h1 {
+  margin: .25rem 0 .5rem 0;
+  font-weight: 500;
+  color: #808b98;
+}
+
 h2 {
   margin: 0 0 .5rem 0;
   font-weight: 500;
   color: #808b98;
 }
 .option {
-  padding: .5rem 0;
+  padding: 0;
   display: flex;
   align-items: center;
 }
@@ -126,6 +133,10 @@ label span {
 }
 
 section {
+  border-bottom: 1px solid #343742;
   padding: 2rem;
-  margin-bottom: 2rem;
+}
+
+section:last-of-type {
+  border-bottom: 0;
 }

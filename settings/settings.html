@@ -10,38 +10,43 @@
     <div class="container">
       <header>
         <img src="/images/appland-logo-sharp.svg"/>
-        <h2>Browser extension settings</h2>
+        <h1>Browser extension settings</h1>
       </header>
 
       <form name="settings_form" id="settings">
-        <section class="card">
-          <div class="form">
+        <div class="card">
+
+          <section>
+            <div class="form">
             <label for="appland_url">AppLand Server URL <span>(required)</span></label>
             <input type="url" id="appland_url" required >
           </div>
-        </section>
-        
-        <section class="card">
-          <h2>Target Server</h2>
+          </section>
+          
+          <section>
+            <h2>Target Server</h2>
           <div class="option">
             <input type="checkbox" id="show_target"><label for="show_target">Show Target URL</label>
           </div>
-        </section>
-        
-        <section class="card">
-          <h2>Errors</h2>
+          </section>
+          
+          <section>
+            <h2>Errors</h2>
           <div class="option">
             <input type="checkbox" id="save_errors"><label for="save_errors">Save Errors</label>
             <a href="/error_log/error_log.html" id="errors_link">Error Log</a>
           </div>
-        </section>
+          </section>
+          
+        </div>
+
       
         <button class="btn btn-primary controls" id="save" disabled>Save</button>
       </form>
+
+      <a href="/options/test.html">Options Test</a>
     </div>
     
     <script src="settings.js" type="module"></script>
-
-    <a href="/options/test.html">Options Test</a>
   </body>
 </html>

@@ -17,10 +17,16 @@
       <label class="appmap-record-button" for="appmap-record"></label>
 
       <form class="hidden" id="target_form">
-        <label for="target_url">Target URL</label><input type="url" id="target_url">
-        <input type="hidden" name="t" id="t" value="false">
-        <button id="save">Save</button>
-        <button id="cancel">Cancel</button>
+        <label for="target_url">Target URL:</label>
+        <div class="form-row">
+          <input type="url" id="target_url">
+          <input type="hidden" name="t" id="t" value="false">
+          <!-- <img src="/images/check_ko.svg" id="save" alt="Save">
+          <img src="/images/times_ko.svg" id="cancel" alt="Cancel">  -->
+          <button id="save" alt="Save"></button>
+          <button id="cancel" alt="Cancel"></button>
+        </div>
+        
       </form>
       <div class="status">Preparing</div>
       
