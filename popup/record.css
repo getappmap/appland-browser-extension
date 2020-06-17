@@ -8,17 +8,20 @@
 }
 
 body {
-  width: 16rem;
   margin: .5em;
   padding: 0;
   background: linear-gradient(90deg, rgba(255,7,170,1) 0%, rgba(156,47,186,1) 100%);
   font-size: 16px;
-  color: #fff;
+  color: #e3e5e8;
   font-family: 'Nunito Sans', sans-serif;
 }
 
+input {
+  color: #e3e5e8;
+}
+
 .header {
-  padding: 2em 0;
+  padding: 2em 2.5rem;
   cursor: pointer;
 }
 
@@ -48,10 +51,10 @@ body {
 }
 
 .container {
-  padding: 0 2em 2em 2em;
   text-align: center;
   background-color: #010306;
   font-size: .9em;
+  margin-bottom: .5rem;
 }
 
 .record-wrap {
@@ -108,7 +111,8 @@ body {
 .status {
   text-align: center;
   color: #afafaf;
-  margin-top: 0.5em;
+  padding: 0.5rem 0;
+  line-height: 3rem ;
 }
 
 input[type=checkbox]:checked + .appmap-record-button {
@@ -126,4 +130,82 @@ input[type=checkbox]:checked + .appmap-record-button:before {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+#target_form.hidden {
+  visibility: hidden;
+  height: 0;
+  width: 16rem;
+}
+
+#target_form:not(.hidden) {
+  width: 20rem;
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  border-top: 1px solid #343742;
+  border-bottom: 1px solid #343742;
+  display: flex;
+  flex-direction: column;
+}
+
+#target_form label {
+  text-align: left;
+}
+
+#target_form #target_url {
+  border: 1px solid #343742;
+  padding: .5rem .8rem;
+  border-radius: 4px;
+  background-color: transparent;
+  /* color: #fff; */
+  font-size: .8rem;
+  flex: 1;
+}
+
+#target_form button {
+  background-color: transparent;
+  color: #fff;
+  padding: .2rem .5rem;
+  border: 0;
+  font-size: 1rem;
+  margin: 0 .2rem;
+}
+
+#target_form button:hover {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+button#save, button#cancel {
+  width: 16px;
+  height: 16px;
+}
+
+button#save {
+  margin-left: .3rem;
+  margin-right: .5rem;
+}
+
+button#save {
+  background-image: url(/images/check_ko.svg);
+  background-repeat: no-repeat;
+}
+button#save:hover {
+  background-image: url(/images/check_green.svg);
+}
+
+button#cancel {
+  background-image: url(/images/times_ko.svg);
+  background-repeat: no-repeat;
+}
+button#cancel:hover {
+  background-image: url(/images/times_red.svg);
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: .2rem;
 }

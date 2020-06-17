@@ -75,6 +75,7 @@ header h2 {
 .card {
   background-color: #010306;
   border-radius: 4px;
+  margin-bottom: 2rem;
 }
 
 fieldset {
@@ -83,13 +84,19 @@ fieldset {
   padding: 0;
 }
 
+h1 {
+  margin: .25rem 0 .5rem 0;
+  font-weight: 500;
+  color: #808b98;
+}
+
 h2 {
   margin: 0 0 .5rem 0;
   font-weight: 500;
   color: #808b98;
 }
 .option {
-  padding: .5rem 0;
+  padding: 0;
   display: flex;
   align-items: center;
 }
@@ -112,32 +119,24 @@ label span {
   border: 0;
   box-shadow: none;
   color: #EAEAEA;
+  background-color: #6c757d;
   padding: .5rem .8rem;
   font-size: 1rem;
 }
 
-.btn-primary {
+.btn-primary:enabled {
   background-color: #FF07AA;
 }
 
-.btn-primary:hover {
+.btn-primary:enabled:hover {
   background-color: #9a0e6a;
 }
 
-#alternate_url {
-  padding: .5rem;
-  background: transparent;
-  border: 1px solid #343742;
-  border-radius: 4px;
-  width: 50%;
-  flex: 1;
-}
-
-#alternate_url:focus, #appland_url:focus {
-  outline: none;
-}
-
 section {
+  border-bottom: 1px solid #343742;
   padding: 2rem;
-  margin-bottom: 2rem;
+}
+
+section:last-of-type {
+  border-bottom: 0;
 }

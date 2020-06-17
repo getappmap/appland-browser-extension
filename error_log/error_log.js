@@ -19,17 +19,34 @@ reloadBtn.addEventListener('click', reload);
 
 deleteAllBtn.addEventListener('click', (e) => {
   if (confirm('Delete all log entries?')) {
-    utils.deleteErrors().then(reload);
+    deleteErrors().then(reload);
   }
 });
 
 async function reload() {
-  document.location.reload();
+  const all_errors = document.querySelector('#all_errors');
+  if (all_errors) {
+    all_errors.remove();
+  }
+  showErrors();
 }
 
 async function onLoad(e) {
   showErrors();
 }
+
+async function getErrors() {
+  return utils.readFromStorage('log').then((log) => 
+    typeof log !== 'undefined'?
+      log.entries                                 
+      : []
+    );
+}
+
+async function deleteErrors() {
+  return utils.deleteFromStorage('log');
+}
+
 
 async function showErrors() {
   const compare = (e1, e2) => {
@@ -43,7 +60,7 @@ async function showErrors() {
   };
   const newestFirst = newestFirstBtn.checked;
   
-  utils.getErrors().then((entries) => {
+  getErrors().then((entries) => {
     const sorted = entries.sort((e1,e2) => 
       newestFirst? compare(e1,e2) : compare(e2,e1)
     );

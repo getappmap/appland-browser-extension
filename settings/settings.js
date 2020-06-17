@@ -1,38 +1,15 @@
-import Options from "/options.js";
+import Options from "/options/options.js";
 
 const settingsForm = document.querySelector('#settings');
 const applandUrlInput = document.querySelector('#appland_url');
-const useCurrentButton = document.querySelector('#use_current');
-const useAlternateButton = document.querySelector('#use_alternate');
-const alternateUrlInput = document.querySelector('#alternate_url');
+const showTargetCB = document.querySelector('#show_target');
 const saveButton = document.querySelector('#save');
-const saveErrorsInput = document.querySelector('#save_errors');
+const saveErrorsCB = document.querySelector('#save_errors');
 const errorsLink = document.querySelector('#errors_link');
 
 const options = new Options();
 
-function setAlternateRadio(value) {
-  if (value === 'current') {
-    useCurrentButton.checked = true;
-  }
-  else if (value === 'alternate') {
-    useAlternateButton.checked = true;
-  }
-}
-
 document.addEventListener('DOMContentLoaded', onLoad);
-alternateUrlInput.addEventListener('focus', () => {
-  setAlternateRadio('alternate');
-  alternateUrlInput.required = true;
-});
-
-useAlternateButton.addEventListener('change', () => {
-  alternateUrlInput.required = true;
-});
-                                 
-useCurrentButton.addEventListener('change', () => {
-  alternateUrlInput.required = false;
-});
 
 settingsForm.addEventListener('input', () => {
   saveButton.disabled = false;
@@ -46,27 +23,31 @@ async function onSubmit(e) {
   }
 
   saveButton.disabled = true;
-  const applandUrl = applandUrlInput.value;
-  const useCurrent = useCurrentButton.checked;
-  const alternateUrl = alternateUrlInput.value;
-  await Promise.all([options.setUseCurrent(useCurrent),
-                     options.setAppLandUrl(applandUrl),
-                     options.setAlternateUrl(alternateUrl)]);
+  const savedApplandUrl = options.setAppLandUrl(applandUrlInput.value);
+  const savedShowTarget = options.setShowTarget(showTargetCB.checked);
+  const savedSaveErrors = options.setSaveErrors(saveErrorsCB.checked);
+  const onceAllSaved = Promise.all([savedApplandUrl, savedShowTarget, savedSaveErrors]);
+  onceAllSaved.then(() => {
+    saveButton.innerText = 'Settings saved';
+    setTimeout(() => {
+      saveButton.innerText = 'Save';
+    },
+    1000);
+  });
+  
 }
 
 async function onLoad(e) {
-  const useCurrent = options.getUseCurrent();
-  setAlternateRadio(useCurrent? 'current' : 'alternate');
-  
-  applandUrlInput.value = await options.getAppLandUrl();
+  options.getAppLandUrl().then((url) =>
+    applandUrlInput.value = url
+  );
   applandUrlInput.placeholder = options.defaultAppLandUrl();
   
-  const alternateUrl = await options.getAlternateUrl();
-  alternateUrlInput.value = await options.getAlternateUrl();
-
-  const saveErrors = await options.getSaveErrors();
-  saveErrorsInput.checked = saveErrors;
-  if (saveErrors) {
-    errorsLink.href = "/errors/errors.html";
-  }
+  options.getShowTarget().then((showTarget) => 
+    showTargetCB.checked = showTarget
+  );
+    
+  options.getSaveErrors().then((saveErrors) => {
+    saveErrorsCB.checked = saveErrors;
+  });
 }
