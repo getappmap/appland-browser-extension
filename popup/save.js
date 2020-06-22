@@ -24,8 +24,13 @@ function onLoad() {
 
 async function saveScenario(data) {
   const form = document.querySelector('form');
-  const applandUrl = await options.getAppLandUrl();
-  form.setAttribute('action', `${applandUrl}/scenarios`);
-  form.querySelector('input').value = JSON.stringify(data);
-  form.submit();
+  return options.getAppLandUrl()
+    .then((applandUrl) => {
+      return options.getEditUpload()
+        .then((editUpload) => {
+          form.setAttribute('action', `${applandUrl}/scenario_uploads`);
+          form.querySelector('input').value = JSON.stringify(data);
+          form.submit();
+        });
+    });
 }
