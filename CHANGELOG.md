@@ -14,8 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   
 ### Changed
 - Removed AppLand URL from the popup.
-- Update styling
-- Update URL to start an upload
+- Update styling.
+- Update URL to start an upload.
+- Close the popup when starting or stopping a recording.
 
 ## [0.1.0] - 2020-05-28
 ### Added

@@ -26,11 +26,8 @@ async function saveScenario(data) {
   const form = document.querySelector('form');
   return options.getAppLandUrl()
     .then((applandUrl) => {
-      return options.getEditUpload()
-        .then((editUpload) => {
-          form.setAttribute('action', `${applandUrl}/scenario_uploads`);
-          form.querySelector('input').value = JSON.stringify(data);
-          form.submit();
-        });
+      form.setAttribute('action', `${applandUrl}/scenario_uploads`);
+      form.querySelector('input').value = JSON.stringify(data);
+      form.submit();
     });
 }
