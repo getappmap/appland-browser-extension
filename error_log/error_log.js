@@ -61,8 +61,8 @@ async function showErrors() {
   const newestFirst = newestFirstBtn.checked;
   
   getErrors().then((entries) => {
-    const sorted = entries.sort((e1,e2) => 
-      newestFirst? compare(e1,e2) : compare(e2,e1)
+    entries = entries.sort((e1,e2) => 
+      newestFirst? compare(e2,e1) : compare(e1,e2)
     );
 
     const allErrorsDiv = document.createElement('div');
