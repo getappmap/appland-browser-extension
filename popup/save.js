@@ -16,8 +16,11 @@ function onLoad() {
       }
     }
     else {
-      utils.showXHRError(req, 'Failed saving recording');
+      utils.showXHRError(req, 'Failed fetching recording');
     }
+  };
+  req.onerror = () => {
+    utils.showXHRError(req, 'Network error fetching recording');
   };
   req.send();
 }

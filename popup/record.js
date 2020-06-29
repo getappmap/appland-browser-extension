@@ -95,8 +95,8 @@ async function onLoad() {
           displayRecording(recordingState.enabled);
           setEnabled(true);
         } else {
-          utils.showXHRError(req, 'Failed checking recording status');
-          setStatus('Not available for this domain');
+          utils.showXHRError(req, 'Does not support AppLand recording');
+          setStatus('Does not support AppLand recording');
         }
       };
       req.onerror = () => {
