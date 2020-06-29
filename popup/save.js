@@ -16,16 +16,21 @@ function onLoad() {
       }
     }
     else {
-      utils.showXHRError(req, 'Failed saving recording');
+      utils.showXHRError(req, 'Failed fetching recording');
     }
+  };
+  req.onerror = () => {
+    utils.showXHRError(req, 'Network error fetching recording');
   };
   req.send();
 }
 
 async function saveScenario(data) {
   const form = document.querySelector('form');
-  const applandUrl = await options.getAppLandUrl();
-  form.setAttribute('action', `${applandUrl}/scenarios`);
-  form.querySelector('input').value = JSON.stringify(data);
-  form.submit();
+  return options.getAppLandUrl()
+    .then((applandUrl) => {
+      form.setAttribute('action', `${applandUrl}/scenario_uploads`);
+      form.querySelector('input').value = JSON.stringify(data);
+      form.submit();
+    });
 }

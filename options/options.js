@@ -1,6 +1,8 @@
 import * as utils from '/utils.js';
 
 export default function Options() {
+
+  // AppLand URL
   this.defaultAppLandUrl = () => chrome.runtime.getManifest().homepage_url;
   const applandUrlKey = 'applandUrl';
   this.getAppLandUrl = async () => 
@@ -11,11 +13,11 @@ export default function Options() {
           : this.setAppLandUrl(this.defaultAppLandUrl())
         );
 
-  this.setAppLandUrl = async (url) => {
-    return utils.writeToStorage(applandUrlKey, url);
-  };
-  
+  this.setAppLandUrl = async (url) => 
+    utils.writeToStorage(applandUrlKey, url);
 
+  
+  // Show Target URL
   const showTargetKey = 'showTarget';
   this.getShowTarget = async () => 
     utils.readFromStorage(showTargetKey)
@@ -29,6 +31,7 @@ export default function Options() {
     utils.writeToStorage(showTargetKey, showTarget);
 
 
+  // Target URL
   const targetUrlsKey = 'targetUrls';
   this.getTargetUrl = async (url) => 
     utils.readFromStorage(targetUrlsKey)
@@ -42,11 +45,7 @@ export default function Options() {
       });
   this.getAllTargetUrls = async () => utils.readFromStorage(targetUrlsKey);
 
-  const defaultTargetUrlKey = 'defaultTargetUrl';
-  const getDefaultTargetUrl = async () => utils.readFromStorage(defaultTargetUrlKey);
-  this.setDefaultTargetUrl = async (defaultTarget) => 
-    utils.writeToStorage(defaultTargetUrlKey, defaultTarget.origin);
-
+  // Save Errors
   const saveErrorsKey = 'saveErrors';
   this.getSaveErrors = async () => 
     utils.readFromStorage(saveErrorsKey)
@@ -58,5 +57,4 @@ export default function Options() {
 
   this.setSaveErrors = async (saveErrors) => 
     utils.writeToStorage(saveErrorsKey, saveErrors);
-
 };

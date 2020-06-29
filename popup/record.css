@@ -134,6 +134,7 @@ input[type=checkbox]:checked + .appmap-record-button:before {
 
 #target_form.hidden {
   visibility: hidden;
+  display: inherit;
   height: 0;
   width: 16rem;
 }

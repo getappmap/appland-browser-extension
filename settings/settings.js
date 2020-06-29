@@ -1,36 +1,67 @@
 import Options from "/options/options.js";
+const options = new Options();
 
 const settingsForm = document.querySelector('#settings');
-const applandUrlInput = document.querySelector('#appland_url');
-const showTargetCB = document.querySelector('#show_target');
-const saveButton = document.querySelector('#save');
-const saveErrorsCB = document.querySelector('#save_errors');
-const errorsLink = document.querySelector('#errors_link');
+const saveBtn = document.querySelector('#save');
 
-const options = new Options();
+function Setting(id) {
+  this.id = id;
+  this.input = document.querySelector(this.id);
+}
+
+function UrlInputSetting(id, get, set, placeholder) {
+  Setting.call(this, id);
+  this.load = async() => {
+    this.input.placeholder = placeholder();
+    return get().then((value) => {
+      this.input.value = value;
+    });
+  };
+  this.save = async () =>
+    set(this.input.value);
+}
+
+function CheckboxSetting(id, get, set) {
+  Setting.call(this, id);
+  this.load = async() => 
+    get().then((checked) => {
+      this.input.checked = checked;
+    });
+  this.save = async () => 
+    set(this.input.checked);
+}
+
+const applandUrl = new UrlInputSetting('#appland_url', options.getAppLandUrl, options.setAppLandUrl, options.defaultAppLandUrl);
+const showTarget = new CheckboxSetting('#show_target', options.getShowTarget, options.setShowTarget);
+const saveErrors = new CheckboxSetting('#save_errors', options.getSaveErrors, options.setSaveErrors);
+
+const settings = [
+  applandUrl,
+  showTarget,
+  saveErrors
+];
 
 document.addEventListener('DOMContentLoaded', onLoad);
 
 settingsForm.addEventListener('input', () => {
-  saveButton.disabled = false;
+  saveBtn.disabled = false;
 });
 
 settingsForm.addEventListener('submit', onSubmit);
 async function onSubmit(e) {
   e.preventDefault();
-  if (saveButton.disabled) {
+  if (saveBtn.disabled) {
     return;
   }
 
-  saveButton.disabled = true;
-  const savedApplandUrl = options.setAppLandUrl(applandUrlInput.value);
-  const savedShowTarget = options.setShowTarget(showTargetCB.checked);
-  const savedSaveErrors = options.setSaveErrors(saveErrorsCB.checked);
-  const onceAllSaved = Promise.all([savedApplandUrl, savedShowTarget, savedSaveErrors]);
-  onceAllSaved.then(() => {
-    saveButton.innerText = 'Settings saved';
+  saveBtn.disabled = true;
+    
+  Promise.all(
+    settings.reduce((acc, setting) => acc + setting.save(), [])
+  ).then(() => {
+    saveBtn.innerText = 'Settings saved';
     setTimeout(() => {
-      saveButton.innerText = 'Save';
+      saveBtn.innerText = 'Save';
     },
     1000);
   });
@@ -38,16 +69,7 @@ async function onSubmit(e) {
 }
 
 async function onLoad(e) {
-  options.getAppLandUrl().then((url) =>
-    applandUrlInput.value = url
+  await Promise.all(
+    settings.map((setting) => setting.load())
   );
-  applandUrlInput.placeholder = options.defaultAppLandUrl();
-  
-  options.getShowTarget().then((showTarget) => 
-    showTargetCB.checked = showTarget
-  );
-    
-  options.getSaveErrors().then((saveErrors) => {
-    saveErrorsCB.checked = saveErrors;
-  });
 }

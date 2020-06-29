@@ -42,7 +42,8 @@ let getTabInfo = null;
 
 header.addEventListener('click', onHeaderClick);
 recordBtn.addEventListener('change', (e) => {
-  e.target.checked ? startRecording() : stopRecording();
+  const action  = e.target.checked ? startRecording : stopRecording;
+  action().then(() => !underTest? window.close() : null);
 });
 
 async function onLoad() {
@@ -94,8 +95,8 @@ async function onLoad() {
           displayRecording(recordingState.enabled);
           setEnabled(true);
         } else {
-          utils.showXHRError(req, 'Failed checking recording status');
-          setStatus('Not available for this domain');
+          utils.showXHRError(req, 'Does not support AppLand recording');
+          setStatus('Does not support AppLand recording');
         }
       };
       req.onerror = () => {
@@ -197,20 +198,24 @@ async function setRecordingTarget(newTarget) {
     });
 }
           
-function startRecording() {
-  getRecordingTarget()
+async function startRecording() {
+  return getRecordingTarget()
     .then((target) => {
-      const req = new XMLHttpRequest();
-      req.open('POST', `${target.url.origin}/_appmap/record`);
-      req.onload = () => {
-        if (req.status === 200) {
-          displayRecording(true);
-        }
-        else {
-          utils.showXHRError(req, 'Failed to start recording');
-        }
-      };
-      req.send();
+      return new Promise((resolve, reject) => {
+        const req = new XMLHttpRequest();
+        req.open('POST', `${target.url.origin}/_appmap/record`);
+        req.onload = () => {
+          if (req.status === 200) {
+            displayRecording(true);
+            resolve();
+          }
+          else {
+            utils.showXHRError(req, 'Failed to start recording')
+              .then(resolve);
+          }
+        };
+        req.send();
+      });
     })
     .catch((error) => {
       handleInternalError(error);
@@ -218,12 +223,17 @@ function startRecording() {
 }
 
 async function stopRecording() {
-  getRecordingTarget()
+  return getRecordingTarget()
     .then((target) => {
-      chrome.tabs.create({
-        url: `/popup/save.html?url=${target.url.origin}`,
-        windowId: target.windowId
-      }, () => displayRecording(false));
+      return new Promise((resolve, reject) => {
+        chrome.tabs.create({
+          url: `/popup/save.html?url=${target.url.origin}`,
+          windowId: target.windowId
+        }, () => {
+          displayRecording(false);
+          resolve();
+        });
+      });
     })
     .catch((error) => {
       handleInternalError(error);

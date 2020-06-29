@@ -80,14 +80,18 @@ async function showErrors() {
       <li><span class="error-label">msg:</span> ${entry.msg}</li>
 `;
       if (entry.resp) {
-        error += `<li><span class="error-label">resp:</span> ${entry.resp}</li>\n`;
+        error += `<li><span class="error-label">resp:</span><pre class="error-resp"></pre></li>\n`;
       }
       error += `
     </ul>
 </details>
 `;
-      
-      allErrorsDiv.insertAdjacentHTML('afterbegin', error);
+      const tmpl = document.createElement('template');
+      tmpl.innerHTML = error;
+      if (entry.resp) {
+        tmpl.content.querySelector('pre.error-resp').innerText = entry.resp;
+      }
+      allErrorsDiv.appendChild(tmpl.content);
     });
     if (allErrorsDiv.childElementCount === 0) {
       const noErrorsText = document.createTextNode('No errors');
