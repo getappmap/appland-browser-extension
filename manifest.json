@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "AppLand",
-  "version": "0.2",
+  "version": "0.2.0",
 
   "description": "Control your AppLand AppMap recordings from the browser",
   "homepage_url": "https://app.land",
