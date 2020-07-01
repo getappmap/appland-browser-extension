@@ -2,12 +2,12 @@
 
   "manifest_version": 2,
   "name": "AppLand",
-  "version": "0.2.0",
+  "version": "0.2.1",
 
   "description": "Control your AppLand AppMap recordings from the browser",
   "homepage_url": "https://app.land",
   "icons": {
-    "48": "images/appland_a_32.png",
+    "48": "images/appland_a_48.png",
     "96": "images/appland_a_96.png",
     "128": "images/appland_a_128.png"
   },
